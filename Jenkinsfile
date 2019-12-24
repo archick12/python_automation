@@ -8,6 +8,12 @@ pipeline {
    stages {
       stage('Build') {
          steps {
+            // Start Selenium GRID
+            sh '''
+               java -jar selenium-server-standalone-3.141.59.jar -role hub -hubConfig hubConfig.json -debug &
+               java -jar selenium-server-standalone-3.141.59.jar -role node -hub http://localhost:4444 &
+               '''
+
             // Get some code from a GitHub repository
             git 'https://github.com/archick12/python_automation.git'
 
